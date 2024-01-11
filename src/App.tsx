@@ -4,6 +4,7 @@ import './App.css'
 type Todo = {
   value: string;
   readonly id: number;
+  checked: boolean;
 }
 
 export const App = () => {
@@ -20,6 +21,7 @@ export const App = () => {
     const newTodo: Todo = {
       value: text,
       id: new Date().getTime(),
+      checked: false,
     }
 
     setTodos(prev => [newTodo, ...prev])
@@ -35,8 +37,20 @@ export const App = () => {
         }
         return todo
       })
-      console.log('original')
-      todos.map(todo => { console.log(`id: ${todo.id} value:${todo.value}`) })
+      // console.log('original')
+      // todos.map(todo => { console.log(`id: ${todo.id} value:${todo.value}`) })
+      return newTodos
+    })
+  }
+
+  const handleCheck = (id: number, checked: boolean) => {
+    setTodos(todos => {
+      const newTodos: Todo[] = todos.map(todo => {
+        if (todo.id === id) {
+          return { ...todo, checked }
+        }
+        return todo
+      })
       return newTodos
     })
   }
@@ -58,7 +72,14 @@ export const App = () => {
           return (
             <li key={todo.id}>
               <input
+                type='checkbox'
+                checked={todo.checked}
+                //checkフラグを反転
+                onChange={() => handleCheck(todo.id, !todo.checked)}
+              />
+              <input
                 type='text'
+                disabled={todo.checked}
                 value={todo.value}
                 onChange={e => handleEdit(todo.id, e.target.value)}
               />

@@ -50,48 +50,30 @@ export const App = () => {
     setText('')
   }
 
-  const handleEdit = (id: number, newValue: string) => {
-    setTodos(todos => {
-      const newTodos: Todo[] = todos.map(todo => {
-        if (todo.id === id) {
-          return { ...todo, value: newValue }
-        }
-        return todo
-      })
-      return newTodos
-    })
-  }
-
-  const handleCheck = (id: number, checked: boolean) => {
-    setTodos(todos => {
-      const newTodos: Todo[] = todos.map(todo => {
-        if (todo.id === id) {
-          return { ...todo, checked }
-        }
-        return todo
-      })
-      return newTodos
-    })
-  }
-
-  const handleRemove = (id: number, removed: boolean) => {
-    setTodos(todos => {
-      const newTodos: Todo[] = todos.map(todo => {
-        if (todo.id === id) {
-          return { ...todo, removed }
-        }
-        return todo
-      })
-      return newTodos
-    })
-  }
-
   const handleFilter = (filter: Filter) => {
     setFilter(filter)
   }
 
   const handleEmpty = () => {
     setTodos(todos => todos.filter(todo => !todo.removed))
+  }
+
+  //K => prop key(string) that you want to change.
+  //V => new value.
+  const handleTodo = <K extends keyof Todo, V extends Todo[K]>(
+    id: number,
+    key: K,
+    value: V
+  ) => {
+    setTodos(todos => {
+      const newTodos: Todo[] = todos.map(todo => {
+        if (todo.id === id) {
+          return { ...todo, [key]: value }
+        }
+        return todo
+      })
+      return newTodos
+    })
   }
 
 
@@ -137,18 +119,18 @@ export const App = () => {
                 disabled={todo.removed}
                 checked={todo.checked}
                 //checkフラグを反転
-                onChange={() => handleCheck(todo.id, !todo.checked)}
+                onChange={() => handleTodo(todo.id, 'checked', !todo.checked)}
               />
 
               <input
                 type='text'
                 disabled={todo.checked || todo.removed}
                 value={todo.value}
-                onChange={e => handleEdit(todo.id, e.target.value)}
+                onChange={e => handleTodo(todo.id, 'value', e.target.value)}
               />
 
               <button
-                onClick={() => handleRemove(todo.id, !todo.removed)}
+                onClick={() => handleTodo(todo.id, 'removed', !todo.removed)}
               >
                 {todo.removed ? 'Restore' : 'Delete'}
               </button>

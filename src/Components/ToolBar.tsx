@@ -2,6 +2,7 @@ import { AppBar, Box, Icon, IconButton, Toolbar, Typography } from "@mui/materia
 
 type Props = {
     filter: Filter
+    onToggleDrawer: () => void
 }
 
 const traslator = (arg: Filter): string => {
@@ -34,6 +35,7 @@ export const ToolBar = (props: Props) => (
                     edge="start"
                     color="inherit"
                     sx={{ mr: 2 }}
+                    onClick={props.onToggleDrawer}
                 >
                     <Icon>menu</Icon>
                 </IconButton>

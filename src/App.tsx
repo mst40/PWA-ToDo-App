@@ -5,6 +5,7 @@ import { ToolBar } from 'src/Components/ToolBar';
 import { SideBar } from 'src/Components/SideBar';
 import { FormDialog } from 'src/Components/FormDialog';
 import { TodoItem } from 'src/Components/TodoItem';
+import { QR } from 'src/Components/QR';
 
 const theme = createTheme({
   palette: {
@@ -26,6 +27,11 @@ export const App = () => {
   const [todos, setTodos] = useState<Todo[]>([])
   const [filter, setFilter] = useState<Filter>('all')
   const [isDrawerOpen, setIsDrawerOpen] = useState<boolean>(false)
+  const [isQrOpen, setIsQrOpen] = useState<boolean>(false)
+
+  const handleToggleOR = () => {
+    setIsQrOpen((isQrOpen => !isQrOpen))
+  }
 
   const handleToggleDrawer = () => {
     setIsDrawerOpen((isDrawerOpen) => !isDrawerOpen)
@@ -57,17 +63,15 @@ export const App = () => {
     setTodos(todos => todos.filter(todo => !todo.removed))
   }
 
-  //K => prop key(string) that you want to change.
-  //V => new value.
   const handleTodo = <K extends keyof Todo, V extends Todo[K]>(
     id: number,
     key: K,
-    value: V
+    newValue: V
   ) => {
     setTodos(todos => {
       const newTodos: Todo[] = todos.map(todo => {
         if (todo.id === id) {
-          return { ...todo, [key]: value }
+          return { ...todo, [key]: newValue }
         }
         return todo
       })
@@ -80,7 +84,15 @@ export const App = () => {
       <ThemeProvider theme={theme}>
         <GlobalStyles styles={{ body: { margin: 0, padding: 0 } }} />
         <ToolBar filter={filter} onToggleDrawer={handleToggleDrawer} />
-        <SideBar onSort={handleFilter} isDrawerOpen={isDrawerOpen} onToggleDrawer={handleToggleDrawer} />
+        {/* isDrawerOpen is true */}
+        <SideBar
+          onSort={handleFilter}
+          isDrawerOpen={isDrawerOpen}
+          onToggleDrawer={handleToggleDrawer}
+          onToggleQR={handleToggleOR}
+        />
+        {/* isQrOpen is true */}
+        <QR open={isQrOpen} onClose={handleToggleOR} />
         <FormDialog text={text} onChange={handleChange} onSubmit={handleSubmit} />
         <TodoItem todos={todos} filter={filter} onTodo={handleTodo} />
         <ActionButton todos={todos} onEmpty={handleEmpty} />

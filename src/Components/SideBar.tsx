@@ -1,7 +1,8 @@
 import pjson from '../../package.json'
-import { Avatar, Divider, Drawer, Icon, List, ListItemButton, ListItemIcon, ListItemText, styled } from "@mui/material"
+import { Avatar, Divider, Drawer, Icon, List, ListItem, ListItemButton, ListItemIcon, ListItemText, styled } from "@mui/material"
 
 type Props = {
+    onToggleQR: () => void
     onSort: (filter: Filter) => void,
     isDrawerOpen: boolean,
     onToggleDrawer: () => void
@@ -78,6 +79,14 @@ export const SideBar = (props: Props) => (
                     <ListItemText secondary="Trash Box" />
                 </ListItemButton>
                 <Divider />
+                <ListItem disablePadding >
+                    <ListItemButton aria-label='aria-label' onClick={props.onToggleQR}>
+                        <ListItemIcon>
+                            <Icon>share</Icon>
+                        </ListItemIcon>
+                        <ListItemText secondary="Share this App" />
+                    </ListItemButton>
+                </ListItem>
             </List>
         </DrawerList>
     </Drawer>

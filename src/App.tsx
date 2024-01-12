@@ -1,11 +1,10 @@
 import React, { useState } from 'react'
-import { FormDialog } from './Components/FormDialog';
-import { ActionButton } from './Components/ActionButton';
-import { SideBar } from './Components/SideBar';
-import { TodoItem } from './Components/TodoItem';
-import { ToolBar } from './Components/ToolBar';
-import GlobalStyles from '@mui/material/GlobalStyles';
-import { ThemeProvider, createTheme } from '@mui/material';
+import { GlobalStyles, ThemeProvider, createTheme } from '@mui/material';
+import { ActionButton } from 'src/Components/ActionButton';
+import { ToolBar } from 'src/Components/ToolBar';
+import { SideBar } from 'src/Components/SideBar';
+import { FormDialog } from 'src/Components/FormDialog';
+import { TodoItem } from 'src/Components/TodoItem';
 
 const theme = createTheme({
   palette: {

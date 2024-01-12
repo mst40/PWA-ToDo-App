@@ -1,27 +1,14 @@
 import React, { useState } from 'react'
 import './App.css'
+import { FormDialog } from './Components/FormDialog';
+import { ActionButton } from './Components/ActionButton';
+import { SideBar } from './Components/SideBar';
+import { TodoItem } from './Components/TodoItem';
 
 export const App = () => {
   const [text, setText] = useState<string>('');
   const [todos, setTodos] = useState<Todo[]>([])
   const [filter, setFilter] = useState<Filter>('all')
-
-  const filteredTodos: Todo[] = todos.filter(todo => {
-    switch (filter) {
-      case 'all': {
-        return !todo.removed;
-      }
-      case 'checked': {
-        return !todo.removed && todo.checked
-      }
-      case 'current': {
-        return !todo.removed && !todo.checked
-      }
-      case 'removed': {
-        return todo.removed;
-      }
-    }
-  })
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setText(e.target.value)
@@ -71,15 +58,7 @@ export const App = () => {
 
   return (
     <>
-      <select
-        defaultValue={'all'}
-        onChange={e => handleFilter(e.target.value as Filter)}
-      >
-        <option value="all">All</option>
-        <option value="checked">Done</option>
-        <option value="current">Current</option>
-        <option value="removed">Trash Can</option>
-      </select>
+      <SideBar onSort={handleFilter} />
 
       {filter === 'removed' ? (
         <button
@@ -89,45 +68,14 @@ export const App = () => {
           Clear Trash Can
         </button>
       ) : (
-        filter !== 'checked' && (
-          <form onSubmit={e => {
-            e.preventDefault()
-            handleSubmit()
-          }}>
+        filter !== 'checked' &&
+        <FormDialog
+          text={text}
+          onChange={handleChange}
+          onSubmit={handleSubmit}
+        />)}
 
-            <input type='text' value={text} onChange={e => handleChange(e)} />
-
-            <input type='submit' value={'ADD'} />
-          </form>))}
-
-
-      <ul>
-        {filteredTodos.map(todo => {
-          return (
-            <li key={todo.id}>
-              <input
-                type='checkbox'
-                disabled={todo.removed}
-                checked={todo.checked}
-                //checkフラグを反転
-                onChange={() => handleTodo(todo.id, 'checked', !todo.checked)}
-              />
-
-              <input
-                type='text'
-                disabled={todo.checked || todo.removed}
-                value={todo.value}
-                onChange={e => handleTodo(todo.id, 'value', e.target.value)}
-              />
-
-              <button
-                onClick={() => handleTodo(todo.id, 'removed', !todo.removed)}
-              >
-                {todo.removed ? 'Restore' : 'Delete'}
-              </button>
-            </li>)
-        })}
-      </ul>
-    </>
-  )
+      <TodoItem todos={todos} filter={filter} onTodo={handleTodo} />
+      <ActionButton todos={todos} onEmpty={handleEmpty} />
+    </>)
 }

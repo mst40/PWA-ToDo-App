@@ -1,15 +1,6 @@
 import React, { useState } from 'react'
 import './App.css'
 
-type Todo = {
-  value: string;
-  readonly id: number;
-  checked: boolean;
-  removed: boolean;
-}
-
-type Filter = "all" | "checked" | "current" | 'removed'
-
 export const App = () => {
   const [text, setText] = useState<string>('');
   const [todos, setTodos] = useState<Todo[]>([])

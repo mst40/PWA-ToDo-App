@@ -1,0 +1,1 @@
+declare type Filter = "all" | "checked" | "current" | 'removed'

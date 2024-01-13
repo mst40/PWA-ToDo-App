@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { GlobalStyles, ThemeProvider, createTheme } from '@mui/material';
 import { ActionButton } from 'src/Components/ActionButton';
 import { ToolBar } from 'src/Components/ToolBar';
@@ -6,6 +6,8 @@ import { SideBar } from 'src/Components/SideBar';
 import { FormDialog } from 'src/Components/FormDialog';
 import { TodoItem } from 'src/Components/TodoItem';
 import { QR } from 'src/Components/QR';
+import { AlertDialog } from 'src/Components/AlertDialog';
+import localforage from 'localforage';
 
 const theme = createTheme({
   palette: {
@@ -28,27 +30,34 @@ export const App = () => {
   const [filter, setFilter] = useState<Filter>('all')
   const [isDrawerOpen, setIsDrawerOpen] = useState<boolean>(false)
   const [isQrOpen, setIsQrOpen] = useState<boolean>(false)
+  const [isDialogOpen, setIsDialogOpen] = useState<boolean>(false)
   const [isAlertOpen, setIsAlertOpen] = useState<boolean>(false)
 
   const handleToggleAlert = () => {
     setIsAlertOpen(isAlertOpen => !isAlertOpen)
   }
 
+  const handleToggleDialog = () => {
+    setIsDialogOpen(isDialogOpen => !isDialogOpen)
+  }
 
   const handleToggleOR = () => {
-    setIsQrOpen((isQrOpen => !isQrOpen))
+    setIsQrOpen(isQrOpen => !isQrOpen)
   }
 
   const handleToggleDrawer = () => {
-    setIsDrawerOpen((isDrawerOpen) => !isDrawerOpen)
+    setIsDrawerOpen(isDrawerOpen => !isDrawerOpen)
   }
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setText(e.target.value)
   }
 
   const handleSubmit = () => {
-    if (!text) { return; }
+    if (!text) {
+      setIsDialogOpen(isDialogOpen => !isDialogOpen)
+      return;
+    }
 
     const newTodo: Todo = {
       value: text,
@@ -59,6 +68,8 @@ export const App = () => {
 
     setTodos(prev => [newTodo, ...prev])
     setText('')
+    setIsDialogOpen(isDialogOpen => !isDialogOpen)
+
   }
 
   const handleFilter = (filter: Filter) => {
@@ -85,20 +96,41 @@ export const App = () => {
     })
   }
 
+  useEffect(() => {
+    localforage
+      .getItem('todo-20200101')
+      .then(values => setTodos(values as Todo[]))
+  }, [])
+
+  useEffect(() => {
+    localforage.setItem('todo-20200101', todos);
+  }, [todos])
+
   return (
     <div>
       <ThemeProvider theme={theme}>
         <GlobalStyles styles={{ body: { margin: 0, padding: 0 } }} />
         <ToolBar filter={filter} onToggleDrawer={handleToggleDrawer} />
-        {/* isDrawerOpen is true */}
+
+        {/* When isDrawerOpen == true */}
         <SideBar
           onSort={handleFilter}
           isDrawerOpen={isDrawerOpen}
           onToggleDrawer={handleToggleDrawer}
           onToggleQR={handleToggleOR}
         />
-        {/* isQrOpen is true */}
+
+        {/* When isQrOpen == true */}
         <QR open={isQrOpen} onClose={handleToggleOR} />
+
+        {/* When is FormDialogOpen == true */}
+        <FormDialog
+          text={text}
+          onChange={handleChange}
+          onSubmit={handleSubmit}
+          dialogOpen={isDialogOpen}
+          onToggleDialog={handleToggleDialog}
+        />
 
         {/* When isAlertOpen == true */}
         <AlertDialog

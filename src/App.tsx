@@ -28,6 +28,12 @@ export const App = () => {
   const [filter, setFilter] = useState<Filter>('all')
   const [isDrawerOpen, setIsDrawerOpen] = useState<boolean>(false)
   const [isQrOpen, setIsQrOpen] = useState<boolean>(false)
+  const [isAlertOpen, setIsAlertOpen] = useState<boolean>(false)
+
+  const handleToggleAlert = () => {
+    setIsAlertOpen(isAlertOpen => !isAlertOpen)
+  }
+
 
   const handleToggleOR = () => {
     setIsQrOpen((isQrOpen => !isQrOpen))
@@ -93,7 +99,13 @@ export const App = () => {
         />
         {/* isQrOpen is true */}
         <QR open={isQrOpen} onClose={handleToggleOR} />
-        <FormDialog text={text} onChange={handleChange} onSubmit={handleSubmit} />
+
+        {/* When isAlertOpen == true */}
+        <AlertDialog
+          onEmpty={handleEmpty}
+          onToggleAlert={handleToggleAlert}
+          AlertOpen={isAlertOpen} />
+
         <TodoItem todos={todos} filter={filter} onTodo={handleTodo} />
         <ActionButton
           todos={todos}

@@ -95,7 +95,14 @@ export const App = () => {
         <QR open={isQrOpen} onClose={handleToggleOR} />
         <FormDialog text={text} onChange={handleChange} onSubmit={handleSubmit} />
         <TodoItem todos={todos} filter={filter} onTodo={handleTodo} />
-        <ActionButton todos={todos} onEmpty={handleEmpty} />
+        <ActionButton
+          todos={todos}
+          filter={filter}
+          alertOpen={isAlertOpen}
+          dialogOpen={isDialogOpen}
+          onToggleAlert={handleToggleAlert}
+          onToggleDialog={handleToggleDialog}
+        />
       </ThemeProvider>
     </div>)
 }

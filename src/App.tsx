@@ -8,6 +8,7 @@ import { TodoItem } from 'src/Components/TodoItem';
 import { QR } from 'src/Components/QR';
 import { AlertDialog } from 'src/Components/AlertDialog';
 import localforage from 'localforage';
+import { isTodos } from 'src/lib/isTodos';
 
 const theme = createTheme({
   palette: {
@@ -99,7 +100,7 @@ export const App = () => {
   useEffect(() => {
     localforage
       .getItem('todo-20200101')
-      .then(values => setTodos(values as Todo[]))
+      .then(values => isTodos(values) && setTodos(values))
   }, [])
 
   useEffect(() => {

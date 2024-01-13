@@ -4,13 +4,6 @@
 
 This project is a Progressive Web App (PWA) for managing todos. It leverages modern web technologies and libraries.
 
-## Scripts
-
-`dev`: Run the development server using Vite.
-`build`: Build the project using TypeScript and Vite.
-`lint`: Lint the code using ESLint.
-`preview`: Preview the production build using Vite.
-
 ## Dependencies
 
 - @emotion/react

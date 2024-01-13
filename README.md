@@ -1,30 +1,49 @@
-# React + TypeScript + Vite
-https://mst40.github.io/PWA-ToDo-App/
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+# ToDo web app
 
-Currently, two official plugins are available:
+**https://mst40.github.io/PWA-ToDo-App/**
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+This project is a Progressive Web App (PWA) for managing todos. It leverages modern web technologies and libraries.
 
-## Expanding the ESLint configuration
+## Installation
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+1. Clone this repository.
+2. Install dependencies using npm install.
 
-- Configure the top-level `parserOptions` property like this:
+## Scripts
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
-```
+`dev`: Run the development server using Vite.
+`build`: Build the project using TypeScript and Vite.
+`lint`: Lint the code using ESLint.
+`preview`: Preview the production build using Vite.
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+## Dependencies
+
+- @emotion/react: Version 11.11.3
+- @emotion/styled: Version 11.11.0
+- @mui/material: Version 5.15.4
+- localforage: Version 1.10.0
+- react: Version 18.2.0
+- react-dom: Version 18.2.0
+- react-qrcode-logo: Version 2.9.0
+
+## Dev Dependencies
+
+- @types/node: Version 20.11.0
+- @types/react: Version 18.2.43
+- @types/react-dom: Version 18.2.17
+- @typescript-eslint/eslint-plugin: Version 6.14.0
+- @typescript-eslint/parser: Version 6.14.0
+- @vitejs/plugin-react: Version 4.2.1
+- eslint: Version 8.55.0
+- eslint-plugin-react-hooks: Version 4.6.0
+- eslint-plugin-react-refresh: Version 0.4.5
+- typescript: Version 5.2.2
+- vite: Version 5.0.8
+- vite-plugin-pwa: Version 0.17.4
+
+## Usage
+
+1. Start the development server: npm run dev.
+2. Build the project: npm run build.
+
+Feel free to customize this README to provide more context about your project and any additional information that would be helpful for other developers. Happy coding! 🚀

@@ -60,7 +60,7 @@ export default defineConfig({
           purpose: 'maskable',
         },
       ],
-      id: '/PWA-ToDo-App/'
+      id: '/PWA-ToDo-App/',
     },
     registerType: "autoUpdate"
   })],

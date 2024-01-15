@@ -34,7 +34,7 @@ export default defineConfig({
        */
       orientation: "portrait",
       // 既定のテーマカラー
-      theme_color: '#3f51b2',
+      theme_color: '#009688',
       // スタイルシートが読み込まれる前に表示するアプリページの背景色
       background_color: "#efeff4",
       /**
